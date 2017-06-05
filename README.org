@@ -1,0 +1,21 @@
+* Dotfiles
+
+Some configuration files I use on multiple machines.
+
+** Bash
+   Collection of bash functions/aliases/settings I use. Bulk of functions are in [[file:bash/main.sh][main.sh]], with private stuff in [[file:bash/private.sh][private.sh]] (obviously not tracked by git). If main.sh ever gets too disorganized, I'll likely branch it into functions.sh, aliases.sh, etc. I source all of these into my session at startup through the following code in my ~/.bashrc:
+
+   #+BEGIN_SRC sh
+     # Load in my custom configuration
+     if [[ -d ~/dotfiles/bash ]]; then
+         for file in ~/dotfiles/bash/*; do
+             . "$file"
+         done
+     fi
+   #+END_SRC
+
+** Vim
+   vim configuration file. ~/.vimrc is a symlink to this
+
+** Spacemacs
+  [[http://spacemacs.org/][Spacemacs]] configuration. Uses symlinks similar to with vim above.
