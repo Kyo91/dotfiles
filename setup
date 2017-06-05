@@ -1,0 +1,24 @@
+#!/bin/bash
+
+DOTFILES=$(dirname $0)
+
+echo Adding bash files to "$HOME/.bashrc"...
+cat >>"$HOME/.bashrc" <<EOF
+# Load in my custom configuration
+if [[ -d ~/dotfiles/bash ]]; then
+    for file in ~/dotfiles/bash/*; do
+        . "\$file"
+    done
+fi
+EOF
+echo DONE.
+
+echo Attempting to install spacemacs if not installed...
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d && echo "Spacemacs installed" || echo "Spacemacs install failed. Perhaps already installed?"
+echo Linking .spacemacs file...
+ln -s "$DOTFILES/spacemacs/.spacemacs" "$HOME/.spacemacs" && echo "Done."
+echo Linking private layer...
+ln -s "$DOTFILES/spacemacs/private" "$HOME/.emacs.d/private" && echo "Done."
+
+echo Linking .vimrc...
+ln -s "$DOTFILES/vim/.vimrc" "$HOME/.vimrc" && echo "Done."
