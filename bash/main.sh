@@ -88,3 +88,6 @@ alias ga='git add -u'
 alias gw='./gradlew'
 alias addrc="$EDITOR $CONFIG_FILE"
 alias refresh=". ~/.bashrc"
+# Enable/disable upstream branch on git prompt
+alias upshow="GIT_PROMPT_SHOW_UPSTREAM=1"
+alias uphide="GIT_PROMPT_SHOW_UPSTREAM="
