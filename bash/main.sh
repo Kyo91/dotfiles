@@ -10,7 +10,7 @@ DU='du'
 TAR='tar'
 
 unamestr=`uname`
-if [[ "$unamestr" == 'Darwin' ]]; then
+if [[ $unamestr == Darwin ]]; then
     PLATFORM='osx'
     SED="g$SED"
     LS="g$LS"
@@ -27,9 +27,11 @@ CONFIG_FILE="$HOME/dotfiles/bash/main.sh"
 export EDITOR=vim
 
 # Fancy GIT bash prompt (https://github.com/magicmonty/bash-git-prompt)
-if [ -f "/usr/local/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+if [[ $unamestr == Darwin ]]; then
+    if [ -f "/usr/local/opt/bash-git-prompt/share/gitprompt.sh" ]; then
         __GIT_PROMPT_DIR="/usr/local/opt/bash-git-prompt/share"
         source "/usr/local/opt/bash-git-prompt/share/gitprompt.sh"
+    fi
 fi
 
 # Functions
