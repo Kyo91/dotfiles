@@ -26,13 +26,13 @@ export GTAGSLABEL=pygments
 CONFIG_FILE="$HOME/dotfiles/bash/main.sh"
 export EDITOR=vim
 
+# Fancy GIT bash prompt (https://github.com/magicmonty/bash-git-prompt)
+if [ -f "/usr/local/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+        __GIT_PROMPT_DIR="/usr/local/opt/bash-git-prompt/share"
+        source "/usr/local/opt/bash-git-prompt/share/gitprompt.sh"
+fi
+
 # Functions
-
-
-function addrc {
-    $EDITOR $CONFIG_FILE
-}
-
 function body {
     local lines=$(wc -l "$1" | awk '{print $1}')
     local values=$(( ${lines} - 1 ))
@@ -84,3 +84,5 @@ alias curl='curl -L -C - ' # Auto follow redirect & continue downloads
 alias gs="git status"
 alias ga='git add -u'
 alias gw='./gradlew'
+alias addrc="$EDITOR $CONFIG_FILE"
+alias refresh=". ~/.bashrc"
