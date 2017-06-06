@@ -35,6 +35,7 @@
     evil-smartparens
     ggtags
     counsel-gtags
+    magit
     org
     ;; For gradle syntax highlighting & gradle commands
     groovy-mode
@@ -90,7 +91,7 @@ Each entry is either:
 
 (defun kyo/post-init-smartparens ()
   (smartparens-global-mode)
-  (smartparens-strict-mode 1))
+  )
 
 
 
@@ -109,8 +110,27 @@ Each entry is either:
   (use-package evil-smartparens
     :config
     (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)))
-;;; packages.el ends here
 
+;; gradlew is a wrapper for gradle used by my company for some extra functionality on top of gradle
+;; TODO change code to default to normal gradle if gradlew not available.
+(defun kyo/run-gradle-command (command)
+  (let ((gradlew (concat (projectile-project-root) "/gradlew ")))
+    (async-shell-command (concat gradlew command))))
+
+(defun kyo/gradlew-apply-spotless ()
+  (interactive)
+  (kyo/run-gradle-command "spotlessApply"))
+
+(defun kyo/gradlew-check ()
+  (interactive)
+  (kyo/run-gradle-command "check"))
+
+(defun kyo/dired-open (arg file-list)
+  "Use OSX 'open' command to open the file at point (for instance a html file in browser)."
+  (interactive (list
+                current-prefix-arg
+                (dired-get-marked-files t current-prefix-arg)))
+  (dired-do-shell-command "open *" arg file-list))
 
 (defun kyo/init-groovy-mode ()
   (use-package groovy-mode
@@ -119,5 +139,14 @@ Each entry is either:
 (defun kyo/init-gradle-mode ()
   (use-package gradle-mode
     :mode ("\\.java" . gradle-mode)
-    :config (add-hook 'magit-mode-hook '(lambda () (gradle-mode 1)))
-    :config (spacemacs/set-leader-keys-for-minor-mode 'gradle-mode "ob" 'gradle-build)))
+    :config (add-hook 'magit-status-mode-hook '(lambda () (gradle-mode 1)))
+    :config (spacemacs/set-leader-keys-for-minor-mode 'gradle-mode
+              "ob" 'gradle-build
+              "ot" 'gradle-test)))
+
+(defun kyo/post-init-magit ()
+  (spacemacs/set-leader-keys-for-major-mode 'magit-status-mode
+    "oa" 'kyo/gradlew-apply-spotless
+    "oc" 'kyo/gradlew-check
+    ))
+;;; packages.el ends here
