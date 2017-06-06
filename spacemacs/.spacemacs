@@ -330,8 +330,7 @@ you should place your code here."
 			(setq indent-tabs-mode t
 				  tab-width 4))
   (spacemacs/set-leader-keys-for-major-mode 'dired-mode
-	"oo" 'kyo/dired-open)
-  )
+    "oo" 'kyo/dired-open))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

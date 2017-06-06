@@ -112,18 +112,29 @@ Each entry is either:
     (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)))
 
 ;; gradlew is a wrapper for gradle used by my company for some extra functionality on top of gradle
-;; TODO change code to default to normal gradle if gradlew not available.
-(defun kyo/run-gradle-command (command)
-  (let ((gradlew (concat (projectile-project-root) "/gradlew ")))
-    (async-shell-command (concat gradlew command))))
+;; if exists for a project, it'll be at the project root.
+(defun kyo/run-gradle-command-async (command)
+  (interactive "MCommand: ")
+  (let* ((gradlew (concat (projectile-project-root) "/gradlew"))
+         (gradle (if (file-executable-p gradlew) gradlew "gradle")))
+    (async-shell-command (concat gradle " " command))))
 
-(defun kyo/gradlew-apply-spotless ()
+(defun kyo/gradle-apply-spotless ()
   (interactive)
-  (kyo/run-gradle-command "spotlessApply"))
+  (kyo/run-gradle-command-async "spotlessApply"))
 
-(defun kyo/gradlew-check ()
+(defun kyo/gradle-check ()
   (interactive)
-  (kyo/run-gradle-command "check"))
+  (kyo/run-gradle-command-async "check"))
+
+(defun kyo/gradle-build ()
+  (interactive)
+  (kyo/run-gradle-command-async "build"))
+
+(defun kyo/gradle-test ()
+  (interactive)
+  (kyo/run-gradle-command-async "test"))
+
 
 (defun kyo/dired-open (arg file-list)
   "Use OSX 'open' command to open the file at point (for instance a html file in browser)."
@@ -141,12 +152,13 @@ Each entry is either:
     :mode ("\\.java" . gradle-mode)
     :config (add-hook 'magit-status-mode-hook '(lambda () (gradle-mode 1)))
     :config (spacemacs/set-leader-keys-for-minor-mode 'gradle-mode
-              "ob" 'gradle-build
-              "ot" 'gradle-test)))
+              "ob" 'kyo/gradle-build
+              "ot" 'kyo/gradle-test
+			  "oa" 'kyo/gradle-apply-spotless
+			  "oc" 'kyo/gradle-check
+			  "oo" 'kyo/run-gradle-command-async
+			  )))
 
 (defun kyo/post-init-magit ()
-  (spacemacs/set-leader-keys-for-major-mode 'magit-status-mode
-    "oa" 'kyo/gradlew-apply-spotless
-    "oc" 'kyo/gradlew-check
-    ))
+  )
 ;;; packages.el ends here
