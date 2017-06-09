@@ -37,6 +37,8 @@
     counsel-gtags
     magit
     org
+    org-projectile
+    imenu-anywhere
     ;; For gradle syntax highlighting & gradle commands
     groovy-mode
     gradle-mode)
@@ -96,13 +98,13 @@ Each entry is either:
 
 
 (defun kyo/post-init-org ()
-  (setq org-agenda-files '("/Users/sblumenthal/agenda/")
+  (setq org-agenda-files '("~/agenda/" "~/.deft/")
         org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE" "CANCELED"))
         org-default-notes-file "/Users/sblumenthal/agenda/capture.org"
         org-enforce-todo-dependencies 't
         org-enforce-todo-checkbox-dependencies 't)
   (setq org-capture-templates           ; Template for storing capture templates by date.
-        '(("t" "General TODO" entry (file+datetree "/Users/sblumenthal/agenda/capture.org")
+        '(("t" "General TODO" entry (file+datetree "~/agenda/capture.org")
            "* TODO %^{Description}\n %i\n"))
         ))
 
@@ -156,9 +158,22 @@ Each entry is either:
               "ot" 'kyo/gradle-test
 			  "oa" 'kyo/gradle-apply-spotless
 			  "oc" 'kyo/gradle-check
-			  "oo" 'kyo/run-gradle-command-async
+			  "og" 'kyo/run-gradle-command-async
 			  )))
+
+(defun kyo/post-init-org-projectile ()
+  (eval-after-load 'org-mode
+    (setq org-projectile:projects-file "~/agenda/projects/TODOs.org")
+    ))
 
 (defun kyo/post-init-magit ()
   )
+
+(defun kyo/init-imenu-anywhere ()
+    (use-package imenu-anywhere
+      :config (spacemacs/set-leader-keys "jI" #'ivy-imenu-anywhere)))
+
+;; Load in private configurations
+(load-file "~/.emacs.d/private/kyo/private.el")
+
 ;;; packages.el ends here

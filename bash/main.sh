@@ -69,6 +69,17 @@ function als {
     source $CONFIG_FILE
 }
 
+function load {
+    emacsclient -n $@
+    echo "Loaded into Emacs:"
+    ls -l $@ | awk '{print $9}'
+}
+
+function agload {
+    targets=$(ag -l -- $1 $2)
+    load $targets
+}
+
 
 # Aliases
 alias last-commit='git log --stat -n 1 && git log -p -n 1'
@@ -92,3 +103,7 @@ alias refresh=". ~/.bashrc"
 # Enable/disable upstream branch on git prompt
 alias upshow="GIT_PROMPT_SHOW_UPSTREAM=1"
 alias uphide="GIT_PROMPT_SHOW_UPSTREAM="
+
+# Immediately open file(s) in existing emacs frame
+alias ec='emacsclient -n'
+alias ecrc="emacsclient -n $CONFIG_FILE"
