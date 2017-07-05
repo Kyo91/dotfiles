@@ -24,7 +24,9 @@ HISTSIZE=100000
 HISTFILESIZE=100000
 export GTAGSLABEL=pygments
 CONFIG_FILE="$HOME/dotfiles/bash/main.sh"
+PRIVATE_CONFIG_FILE="$HOME/dotfiles/bash/private.sh"
 export EDITOR=vim
+export AUTOSSH_PORT=0 # autossh
 
 # Fancy GIT bash prompt (https://github.com/magicmonty/bash-git-prompt)
 if [[ $unamestr == Darwin ]]; then
@@ -69,6 +71,11 @@ function als {
     source $CONFIG_FILE
 }
 
+function alsp {
+    echo "alias" $1'="'$2'"' >> $PRIVATE_CONFIG_FILE
+    source $PRIVATE_CONFIG_FILE
+}
+
 function load {
     emacsclient -n $@
     echo "Loaded into Emacs:"
@@ -78,6 +85,14 @@ function load {
 function agload {
     targets=$(ag -l -- $1 $2)
     load $targets
+}
+
+function ssht {
+        if [[ -z $@ ]]; then
+                echo "usage: $0 <hostname> [params]"
+                exit 1;
+        fi
+        $(which ssh) $@ -t "sh -c 'tmux a || tmux'";
 }
 
 
@@ -107,3 +122,4 @@ alias uphide="GIT_PROMPT_SHOW_UPSTREAM="
 # Immediately open file(s) in existing emacs frame
 alias ec='emacsclient -n'
 alias ecrc="emacsclient -n $CONFIG_FILE"
+alias sshconfig="$EDITOR ~/.ssh/config"

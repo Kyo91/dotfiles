@@ -29,6 +29,10 @@
 
 ;;; Code:
 
+;; Load in private configurations
+(load-file "~/.emacs.d/private/kyo/private.el")
+
+
 (defconst kyo-packages
   '(thrift
     smartparens
@@ -75,17 +79,15 @@ Each entry is either:
       :defer t
       ))
 
-(defun kyo/init-ggtags ()
-  (use-package ggtags
-    :config
-    (add-hook 'prog-mode-hook (ggtags-mode 1))
-    (spacemacs/set-leader-keys "o." #'ggtags-find-definition)
-    (spacemacs/set-leader-keys "o," #'ggtags-prev-mark)
-    (spacemacs/set-leader-keys "or" #'ggtags-find-reference)
-    (spacemacs/set-leader-keys "os" #'ggtags-find-symbol)
-    (spacemacs/set-leader-keys "ol" #'ggtags-view-tag-history)
-    (spacemacs/set-leader-keys "od" #'ggtags-visit-project-root)
-    ))
+(defun kyo/post-init-ggtags ()
+  (add-hook 'prog-mode-hook (ggtags-mode 1))
+  (spacemacs/set-leader-keys "o." #'ggtags-find-definition)
+  (spacemacs/set-leader-keys "o," #'ggtags-prev-mark)
+  (spacemacs/set-leader-keys "or" #'ggtags-find-reference)
+  (spacemacs/set-leader-keys "os" #'ggtags-find-symbol)
+  (spacemacs/set-leader-keys "ol" #'ggtags-view-tag-history)
+  (spacemacs/set-leader-keys "od" #'ggtags-visit-project-root)
+  )
 
 (defun kyo/init-counsel-gtags ()
   (use-package counsel-gtags
@@ -98,15 +100,18 @@ Each entry is either:
 
 
 (defun kyo/post-init-org ()
-  (setq org-agenda-files '("~/agenda/" "~/.deft/")
-        org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE" "CANCELED"))
+  (add-to-list 'org-agenda-files "~/agenda/")
+  (add-to-list 'org-agenda-files "~/.deft/")
+  (setq org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE" "CANCELED"))
         org-default-notes-file "/Users/sblumenthal/agenda/capture.org"
         org-enforce-todo-dependencies 't
         org-enforce-todo-checkbox-dependencies 't)
+  (eval-after-load 'projectile-org (setq org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
   (setq org-capture-templates           ; Template for storing capture templates by date.
         '(("t" "General TODO" entry (file+datetree "~/agenda/capture.org")
            "* TODO %^{Description}\n %i\n"))
-        ))
+        )
+  (kyo/private-configuration))
 
 (defun kyo/init-evil-smartparens ()
   (use-package evil-smartparens
@@ -156,10 +161,9 @@ Each entry is either:
     :config (spacemacs/set-leader-keys-for-minor-mode 'gradle-mode
               "ob" 'kyo/gradle-build
               "ot" 'kyo/gradle-test
-			  "oa" 'kyo/gradle-apply-spotless
-			  "oc" 'kyo/gradle-check
-			  "og" 'kyo/run-gradle-command-async
-			  )))
+              "oa" 'kyo/gradle-apply-spotless
+              "oc" 'kyo/gradle-check
+              "og" 'kyo/run-gradle-command-async)))
 
 (defun kyo/post-init-org-projectile ()
   (eval-after-load 'org-mode
@@ -172,8 +176,5 @@ Each entry is either:
 (defun kyo/init-imenu-anywhere ()
     (use-package imenu-anywhere
       :config (spacemacs/set-leader-keys "jI" #'ivy-imenu-anywhere)))
-
-;; Load in private configurations
-(load-file "~/.emacs.d/private/kyo/private.el")
 
 ;;; packages.el ends here
