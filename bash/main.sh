@@ -26,7 +26,13 @@ export GTAGSLABEL=pygments
 CONFIG_FILE="$HOME/dotfiles/bash/main.sh"
 PRIVATE_CONFIG_FILE="$HOME/dotfiles/bash/private.sh"
 export EDITOR=vim
+export PAGER=less
 export AUTOSSH_PORT=0 # autossh
+
+# Common Lisp Roswell Binaries
+if [ -d "$HOME/.roswell/bin" ]; then
+        export PATH=$PATH:"$HOME/.roswell/bin"
+fi
 
 # Fancy GIT bash prompt (https://github.com/magicmonty/bash-git-prompt)
 if [[ $unamestr == Darwin ]]; then
@@ -36,6 +42,9 @@ if [[ $unamestr == Darwin ]]; then
         export GIT_PROMPT_THEME=Solarized
     fi
 fi
+
+# Lambda prompt
+export PS1="${PS1%??} λ "
 
 # Functions
 function body {
@@ -95,6 +104,18 @@ function ssht {
         $(which ssh) $@ -t "sh -c 'tmux a || tmux'";
 }
 
+function du {
+        $DU -ach "$@" | gsort -h | less
+}
+
+function edit {
+        "$EDITOR" $(which "$1")
+}
+
+function gfind { # Find file from root, pipe errors (usually permission errors) to /dev/null
+        find / -name "$1" 2>/dev/null
+}
+
 
 # Aliases
 alias last-commit='git log --stat -n 1 && git log -p -n 1'
@@ -105,7 +126,6 @@ alias pop='cd -'
 alias fhere='find . -name '
 alias df="$DF -Tha --total"
 alias sed="$SED" # Use GNU sed instead of BSD sed
-alias du="$DU -ach | gsort -h | less"
 alias grep="grep -E"
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e" # Filters ps to match supplied grep regex term. (Ignores grep call)
 alias mkdir="mkdir -pv" # Auto create parents and show created dirs
@@ -123,3 +143,14 @@ alias uphide="GIT_PROMPT_SHOW_UPSTREAM="
 alias ec='emacsclient -n'
 alias ecrc="emacsclient -n $CONFIG_FILE"
 alias sshconfig="$EDITOR ~/.ssh/config"
+
+# sftp compression
+alias sftp='sftp -C'
+
+if [[ $PLATFORM = 'osx' ]]; then
+    alias copy-window='screencapture -cs'
+fi
+
+alias fixup="git add -u && git fix"
+alias pyspark="PYSPARK_DRIVER_PYTHON=bpython $HOME/spark/bin/pyspark"
+alias spark-submit="$HOME/spark/bin/spark-submit --executor-memory 4G"

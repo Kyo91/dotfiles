@@ -5,7 +5,7 @@
 # and those ending with 'b' are background colors.
 initializeANSI()
 {
- esc="\033" # If this doesn't work, enter an ESC directly.
+ esc="" # If this doesn't work, enter an ESC directly.
  # Foreground colors
  blackf="${esc}[30m"; redf="${esc}[31m"; greenf="${esc}[32m"
  yellowf="${esc}[33m" bluef="${esc}[34m"; purplef="${esc}[35m"

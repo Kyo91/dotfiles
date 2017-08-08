@@ -39,13 +39,17 @@
     evil-smartparens
     ggtags
     counsel-gtags
+    counsel
     magit
     org
     org-projectile
     imenu-anywhere
     ;; For gradle syntax highlighting & gradle commands
+    slime
     groovy-mode
-    gradle-mode)
+    gradle-mode
+    perl6-mode
+    flycheck-perl6)
   "The list of Lisp packages required by the kyo layer.
 
 Each entry is either:
@@ -106,11 +110,12 @@ Each entry is either:
         org-default-notes-file "/Users/sblumenthal/agenda/capture.org"
         org-enforce-todo-dependencies 't
         org-enforce-todo-checkbox-dependencies 't)
-  (eval-after-load 'projectile-org (setq org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
   (setq org-capture-templates           ; Template for storing capture templates by date.
         '(("t" "General TODO" entry (file+datetree "~/agenda/capture.org")
            "* TODO %^{Description}\n %i\n"))
         )
+  (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
+  (advice-add 'evil-quit :before 'org-save-all-org-buffers)
   (kyo/private-configuration))
 
 (defun kyo/init-evil-smartparens ()
@@ -131,7 +136,8 @@ Each entry is either:
   (kyo/run-gradle-command-async "spotlessApply"))
 
 (defun kyo/gradle-check ()
-  (interactive)
+  (intera<foo>
+ctive)
   (kyo/run-gradle-command-async "check"))
 
 (defun kyo/gradle-build ()
@@ -177,4 +183,23 @@ Each entry is either:
     (use-package imenu-anywhere
       :config (spacemacs/set-leader-keys "jI" #'ivy-imenu-anywhere)))
 
+(defun kyo/init-perl6-mode ()
+  (use-package perl6-mode
+    :ensure t
+    :defer t
+    :init (add-hook 'perl6-mode-hook (lambda ()
+                                       (push '(?< . ("<" . ">")) evil-surround-pairs-alist)))
+    (sp-local-pair 'perl6-mode "<" ">")
+    (add-hook 'perl6-mode-hook (lambda () (evil-smartparens-mode -1)))))
+
+(defun kyo/init-flycheck-perl6 ()
+  (use-package flycheck-perl6
+    :ensure flycheck))
+
+(defun kyo/post-init-slime ()
+  (push 'slime-asdf slime-contribs)
+  (message slime-contribs))
+
+(defun kyo/post-init-counsel ()
+  (spacemacs/set-leader-keys "ss" 'counsel-grep-or-swiper))
 ;;; packages.el ends here
