@@ -104,8 +104,7 @@ Each entry is either:
 
 
 (defun kyo/post-init-org ()
-  (add-to-list 'org-agenda-files "~/agenda/")
-  (add-to-list 'org-agenda-files "~/.deft/")
+  (setq org-agenda-files '("~/agenda" "~/.deft"))
   (setq org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE" "CANCELED"))
         org-default-notes-file "/Users/sblumenthal/agenda/capture.org"
         org-enforce-todo-dependencies 't
@@ -116,7 +115,7 @@ Each entry is either:
         )
   (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
   (advice-add 'evil-quit :before 'org-save-all-org-buffers)
-  (kyo/private-configuration))
+  )
 
 (defun kyo/init-evil-smartparens ()
   (use-package evil-smartparens
@@ -165,7 +164,8 @@ ctive)
     :mode ("\\.java" . gradle-mode)
     :config (add-hook 'magit-status-mode-hook '(lambda () (gradle-mode 1)))
     :config (spacemacs/set-leader-keys-for-minor-mode 'gradle-mode
-              "ob" 'kyo/gradle-build
+              "ob" 'kyo/gra    // TODO write this method for processing long timestamps into DateTime fields w/ helper method for converting one column at a time.
+dle-build
               "ot" 'kyo/gradle-test
               "oa" 'kyo/gradle-apply-spotless
               "oc" 'kyo/gradle-check
@@ -197,8 +197,7 @@ ctive)
     :ensure flycheck))
 
 (defun kyo/post-init-slime ()
-  (push 'slime-asdf slime-contribs)
-  (message slime-contribs))
+  )
 
 (defun kyo/post-init-counsel ()
   (spacemacs/set-leader-keys "ss" 'counsel-grep-or-swiper))
