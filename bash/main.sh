@@ -20,14 +20,17 @@ if [[ $unamestr == Darwin ]]; then
 fi
 
 # Settings
+shopt -s histappend # Append to history file, don't overwrite it
 HISTSIZE=100000
 HISTFILESIZE=100000
+HISTCONTROL=ignoreboth # Bash history ignores duplicate lines
 export GTAGSLABEL=pygments
 CONFIG_FILE="$HOME/dotfiles/bash/main.sh"
 PRIVATE_CONFIG_FILE="$HOME/dotfiles/bash/private.sh"
 export EDITOR=vim
 export PAGER=less
 export AUTOSSH_PORT=0 # autossh
+export SPARK_HOME="$HOME/spark"
 
 # Common Lisp Roswell Binaries
 if [ -d "$HOME/.roswell/bin" ]; then
@@ -152,5 +155,5 @@ if [[ $PLATFORM = 'osx' ]]; then
 fi
 
 alias fixup="git add -u && git fix"
-alias pyspark="PYSPARK_DRIVER_PYTHON=bpython $HOME/spark/bin/pyspark"
-alias spark-submit="$HOME/spark/bin/spark-submit --executor-memory 4G"
+alias pyspark="PYSPARK_DRIVER_PYTHON=bpython $SPARK_HOME/bin/pyspark"
+alias spark-submit="$SPARK_HOME/bin/spark-submit --executor-memory 4G"
