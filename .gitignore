@@ -1,3 +1,7 @@
-*private*
+*private.el
+*private.sh
 /.DS_Store
 TODOs.org
+*.DS_Store
+*.gradle
+*target/

@@ -31,7 +31,7 @@
 
 ;; Load in private configurations
 (load-file "~/.emacs.d/private/kyo/private.el")
-
+(load "~/.emacs.d/private/kyo/init-eshell.el")
 
 (defconst kyo-packages
   '(thrift
@@ -46,6 +46,8 @@
     imenu-anywhere
     ;; For gradle syntax highlighting & gradle commands
     slime
+    slime-company
+    slime-repl-ansi-color
     groovy-mode
     gradle-mode
     perl6-mode
@@ -93,6 +95,12 @@ Each entry is either:
   (spacemacs/set-leader-keys "od" #'ggtags-visit-project-root)
   )
 
+;; (defun kyo/init-slime-company ()
+;;     (use-package slime-company))
+
+(defun kyo/init-slime-repl-ansi-color ()
+  (use-package slime-repl-ansi-color))
+
 (defun kyo/init-counsel-gtags ()
   (use-package counsel-gtags
     ))
@@ -128,7 +136,7 @@ Each entry is either:
   (interactive "MCommand: ")
   (let* ((gradlew (concat (projectile-project-root) "/gradlew"))
          (gradle (if (file-executable-p gradlew) gradlew "gradle")))
-    (async-shell-command (concat gradle " " command))))
+    (async-shell-command (concat gradle " " commandslime-company ))))
 
 (defun kyo/gradle-apply-spotless ()
   (interactive)
