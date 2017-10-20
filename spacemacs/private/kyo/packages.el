@@ -121,8 +121,8 @@ Each entry is either:
         '(("t" "General TODO" entry (file+datetree "~/agenda/capture.org")
            "* TODO %^{Description}\n %i\n"))
         )
-  (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
-  (advice-add 'evil-quit :before 'org-save-all-org-buffers)
+  ;; (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
+  ;; (advice-add 'evil-quit :before 'org-save-all-org-buffers)
   )
 
 (defun kyo/init-evil-smartparens ()
