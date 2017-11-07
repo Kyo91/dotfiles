@@ -46,8 +46,6 @@
     imenu-anywhere
     ;; For gradle syntax highlighting & gradle commands
     slime
-    slime-company
-    slime-repl-ansi-color
     groovy-mode
     gradle-mode
     perl6-mode
@@ -98,8 +96,8 @@ Each entry is either:
 ;; (defun kyo/init-slime-company ()
 ;;     (use-package slime-company))
 
-(defun kyo/init-slime-repl-ansi-color ()
-  (use-package slime-repl-ansi-color))
+;; (defun kyo/init-slime-repl-ansi-color ()
+;;   (use-package slime-repl-ansi-color))
 
 (defun kyo/init-counsel-gtags ()
   (use-package counsel-gtags
