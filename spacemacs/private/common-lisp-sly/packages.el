@@ -37,7 +37,7 @@
     sly-company
     sly-quicklisp
     sly-named-readtables
-    paredit))
+    ))
 
 
 (defun common-lisp-sly/post-init-auto-highlight-symbol ()

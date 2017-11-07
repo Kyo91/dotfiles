@@ -46,7 +46,6 @@
     imenu-anywhere
     ;; For gradle syntax highlighting & gradle commands
     slime
-    slime-company
     slime-repl-ansi-color
     groovy-mode
     gradle-mode
