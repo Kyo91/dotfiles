@@ -1,0 +1,16 @@
+* Blogs                                                              :elfeed:
+** Software Development                                                 :dev:
+*** Emacs                                                             :emacs:
+**** http://planet.emacsen.org/atom.xml
+*** Data Engineering                                           :data:backend:
+**** https://databricks.com/feed                                      :spark:
+** Language Specific                                                   :lang:
+*** Ocaml                                                             :ocaml:
+**** https://ocaml.org/feed.xml
+*** Lisp                                                               :lisp:
+*** Clojure                                                         :clojure:
+*** Scala                                                             :scala:
+** Other                                                               :misc:
+*** Comics                                                            :comic:
+**** https://xkcd.com/atom.xml                                         :xkcd:
+**** https://www.smbc-comics.com/rss.php                               :smbc:

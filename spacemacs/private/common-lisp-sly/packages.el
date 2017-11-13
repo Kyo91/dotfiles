@@ -65,9 +65,9 @@
                            sly-stickers)
             inferior-lisp-program "sbcl")
       (when (configuration-layer/package-usedp 'sly-quicklisp)
-        (push 'sly-contribs sly-quicklisp))
+        (push 'sly-contribs 'sly-quicklisp))
       (when (configuration-layer/package-usedp 'sly-named-readtables)
-        (push 'sly-contribs sly-named-readtables))
+        (push 'sly-contribs 'sly-named-readtables))
       (add-hook 'sly-mode-hook #'common-lisp-sly/paredit-over-smart)
       (add-hook 'lisp-mode-hook #'common-lisp-sly/paredit-over-smart)
       (add-hook 'sly-db-mode-hook #'evil-emacs-state)
@@ -178,10 +178,8 @@
 (defun common-lisp-sly/init-sly-company ()
   "Initialize sly-company"
   (use-package sly-company
-
-    :init
-    (add-to-list 'company-backends 'sly-company)
     :config
+    (add-to-list 'company-backends 'sly-company)
     (add-hook 'sly-mode-hook 'sly-company-mode)))
 
 (defun common-lisp-sly/paredit-over-smart ()
