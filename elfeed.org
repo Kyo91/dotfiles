@@ -8,6 +8,7 @@
 *** Ocaml                                                             :ocaml:
 **** https://ocaml.org/feed.xml
 *** Lisp                                                               :lisp:
+**** http://planet.lisp.org/rss20.xml
 *** Clojure                                                         :clojure:
 *** Scala                                                             :scala:
 ** Other                                                               :misc:
