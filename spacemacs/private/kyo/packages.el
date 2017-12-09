@@ -40,6 +40,7 @@
     ggtags
     counsel-gtags
     counsel
+    helpful
     magit
     org
     org-projectile
@@ -82,6 +83,15 @@ Each entry is either:
       :mode ("\\.thrift" . thrift-mode)
       :defer t
       ))
+
+(defun kyo/init-helpful ()
+  (use-package helpful
+    :ensure t
+    :config
+    (spacemacs/set-leader-keys (kbd "hdf") #'helpful-function)
+    (spacemacs/set-leader-keys (kbd "hdv") #'helpful-variable)
+    (spacemacs/set-leader-keys (kbd "hdk") #'helpful-key)
+    (spacemacs/set-leader-keys (kbd "hd.") #'helpful-symbol)))
 
 (defun kyo/post-init-ggtags ()
   (add-hook 'prog-mode-hook (ggtags-mode 1))

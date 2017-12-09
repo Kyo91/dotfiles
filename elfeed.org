@@ -1,4 +1,4 @@
-* Blogs                                                              :elfeed:
+* Feeds                                                              :elfeed:
 ** Software Development                                                 :dev:
 *** Emacs                                                             :emacs:
 **** http://planet.emacsen.org/atom.xml
@@ -9,9 +9,17 @@
 **** https://ocaml.org/feed.xml
 *** Lisp                                                               :lisp:
 **** http://planet.lisp.org/rss20.xml
-*** Clojure                                                         :clojure:
+**** http://www.lispcast.com/
+**** Clojure                                                        :clojure:
 *** Scala                                                             :scala:
 ** Other                                                               :misc:
 *** Comics                                                            :comic:
 **** https://xkcd.com/atom.xml                                         :xkcd:
 **** https://www.smbc-comics.com/rss.php                               :smbc:
+** NYTimes                                                     :nytimes:news:
+*** Politics                                                       :politics:
+**** http://www.nytimes.com/services/xml/rss/nyt/Politics.xml
+*** Tech                                                         :technology:
+**** http://feeds.nytimes.com/nyt/rss/Technology
+*** Finance                                                         :finance:
+**** http://rss.nytimes.com/services/xml/rss/nyt/YourMoney.xml
