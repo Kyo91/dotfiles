@@ -87,11 +87,7 @@ Each entry is either:
 (defun kyo/init-helpful ()
   (use-package helpful
     :ensure t
-    :config
-    (spacemacs/set-leader-keys (kbd "hdf") #'helpful-function)
-    (spacemacs/set-leader-keys (kbd "hdv") #'helpful-variable)
-    (spacemacs/set-leader-keys (kbd "hdk") #'helpful-key)
-    (spacemacs/set-leader-keys (kbd "hd.") #'helpful-symbol)))
+    :defer nil))
 
 (defun kyo/post-init-ggtags ()
   (add-hook 'prog-mode-hook (ggtags-mode 1))
