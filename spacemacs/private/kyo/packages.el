@@ -46,7 +46,6 @@
     org-projectile
     imenu-anywhere
     ;; For gradle syntax highlighting & gradle commands
-    slime
     groovy-mode
     gradle-mode
     perl6-mode
@@ -99,12 +98,6 @@ Each entry is either:
   (spacemacs/set-leader-keys "od" #'ggtags-visit-project-root)
   )
 
-;; (defun kyo/init-slime-company ()
-;;     (use-package slime-company))
-
-;; (defun kyo/init-slime-repl-ansi-color ()
-;;   (use-package slime-repl-ansi-color))
-
 (defun kyo/init-counsel-gtags ()
   (use-package counsel-gtags
     ))
@@ -140,7 +133,7 @@ Each entry is either:
   (interactive "MCommand: ")
   (let* ((gradlew (concat (projectile-project-root) "/gradlew"))
          (gradle (if (file-executable-p gradlew) gradlew "gradle")))
-    (async-shell-command (concat gradle " " commandslime-company ))))
+    (async-shell-command (concat gradle " " command))))
 
 (defun kyo/gradle-apply-spotless ()
   (interactive)
@@ -208,8 +201,6 @@ dle-build
   (use-package flycheck-perl6
     :ensure flycheck))
 
-(defun kyo/post-init-slime ()
-  )
 
 (defun kyo/post-init-counsel ()
   (spacemacs/set-leader-keys "ss" 'counsel-grep-or-swiper))
