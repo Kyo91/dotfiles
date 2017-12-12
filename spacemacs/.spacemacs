@@ -544,6 +544,14 @@ org-mode rather than the one shipped with emacs itself"
 	(json-mode-beautify)
 	(other-window -1)))
 
+(defun kyo/eww-new ()
+  (interactive)
+  (let* ((url (read-from-minibuffer "Enter URL or keywords: "))
+         (buffer-name (concat "*eww - " url "*")))
+    (switch-to-buffer (generate-new-buffer buffer-name))
+    (eww-mode)
+    (eww url)))
+
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -608,6 +616,7 @@ See `eshell-prompt-regexp'."
   (spacemacs/set-leader-keys (kbd "hdv") #'helpful-variable)
   (spacemacs/set-leader-keys (kbd "hdk") #'helpful-key)
   (spacemacs/set-leader-keys (kbd "hd.") #'helpful-symbol)
+  (spacemacs/set-leader-keys (kbd "ae") #'kyo/eww-new)
   )
 
 (defun kyo/initialize-eshell ()
