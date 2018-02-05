@@ -62,12 +62,10 @@
                            sly-indentation
                            sly-autodoc
                            sly-scratch
-                           sly-stickers)
+                           sly-stickers
+                           sly-quicklisp
+                           sly-named-readtables)
             inferior-lisp-program "sbcl")
-      (when (configuration-layer/package-usedp 'sly-quicklisp)
-        (push 'sly-contribs 'sly-quicklisp))
-      (when (configuration-layer/package-usedp 'sly-named-readtables)
-        (push 'sly-contribs 'sly-named-readtables))
       (add-hook 'sly-mode-hook #'common-lisp-sly/paredit-over-smart)
       (add-hook 'lisp-mode-hook #'common-lisp-sly/paredit-over-smart)
       (add-hook 'sly-db-mode-hook #'evil-emacs-state)

@@ -40,6 +40,7 @@ values."
      clojure
      common-lisp-sly 
      deft
+	 elastic
      (erc :variables
           erc-server-list
           '(("irc.freenode.net"
@@ -96,7 +97,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(fish-completion dockerfile-mode docker docker-tramp hyperbole evil-string-inflection erc-status-sidebar)
+   dotspacemacs-additional-packages '(fish-completion dockerfile-mode docker docker-tramp hyperbole evil-string-inflection erc-status-sidebar dired+ helpful)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -343,8 +344,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq shell-file-name "bash")
   (setq-default flycheck-scalastylerc "/usr/local/etc/scalastyle_config.xml")
   (setq geiser-active-implementations '(chez))
-  (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "firefox-developer")
+  (setq browse-url-browser-function 'browse-url-generic)
+  (setq browse-url-generic-program (if (string-equal system-type "darwin") "open -a FireFoxDeveloperEdition" "firefox"))
   (add-hook 'tuareg-mode-hook
    (lambda()
     (when (functionp 'prettify-symbols-mode)
@@ -403,13 +404,26 @@ org-mode rather than the one shipped with emacs itself"
 
 (defun kyo/setup-lisp ()
   (setq inferior-lisp-program "sbcl")
-  ;; (load (expand-file-name "~/.roswell/helper.el"))
-  ;; (spacemacs/set-leader-keys-for-major-mode 'lisp-mode "q" 'kyo/slime-qlot-here)
-  ;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
-  ;; (setq slime-contribs '(slime-fancy slime-company slime-asdf slime-indentation slime-sbcl-exts slime-scratch))
-  ;; (slime-setup)
-  ;; (add-hook 'slime-repl-mode-hook 'kyo/slime-settings)
   )
+
+(defun eww-more-readable ()
+  "Makes eww more pleasant to use. Run it after eww buffer is loaded."
+  (interactive)
+  (setq eww-header-line-format nil)               ;; removes page title
+  (setq mode-line-format nil)                     ;; removes mode-line
+  (set-window-margins (get-buffer-window) 20 20) ;; increases size of margins
+  (redraw-display)                                ;; apply mode-line changes
+  (eww-reload))                                    ;; apply eww-header changes
+
+(defun kyo/eww-setup ()
+  (interactive)
+  (evilified-state-evilify-map eww-mode-map
+    :mode eww
+    :eval-after-load eww
+    :bindings
+    "R" #'eww-more-readable
+    "r" #'eww-readable))
+
 
 (defun kyo/setup-counsel ()
   (setq counsel-grep-base-command
@@ -528,9 +542,9 @@ org-mode rather than the one shipped with emacs itself"
 (defun kyo/elfeed-show-visit-eww ()
   (interactive)
   (let ((link (elfeed-entry-link elfeed-show-entry)))
-	(when link
-	  (message "Sent to browser: %s" link)
-	  (eww link))))
+    (when link
+      (message "Sent to browser: %s" link)
+      (eww link))))
 
 (defun kyo/es-request ()
   (interactive)
@@ -590,6 +604,7 @@ you should place your code here."
   (kyo/setup-ibuffer)
   (kyo/setup-lisp)
   (kyo/setup-counsel)
+  (kyo/eww-setup)
   (with-eval-after-load 'erc
     (kyo/erc-config))
   (setq ensime-startup-notification nil)
@@ -630,12 +645,15 @@ See `eshell-prompt-regexp'."
   (spacemacs/set-leader-keys (kbd "sr") #'counsel-rg)
   )
 
+
 (defun kyo/initialize-eshell ()
   (message "Eshell mode hook!")
   (company-mode 1)
   (setup-eshell-autosuggest)
   (define-key eshell-mode-map [remap eshell-pcomplete] 'completion-at-point)
   (define-key eshell-mode-map (kbd "M-p") 'counsel-esh-history))
+
+;; END OF USER CONFIG ;;
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -644,37 +662,49 @@ See `eshell-prompt-regexp'."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   ["#d2ceda" "#f2241f" "#67b11d" "#b1951d" "#3a81c3" "#a31db1" "#21b8c7" "#655370"])
+ '(compilation-message-face (quote default))
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#839496")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
+ '(custom-safe-themes
+   (quote
+	("b81bfd85aed18e4341dbf4d461ed42d75ec78820a60ce86730fc17fc949389b2" default)))
  '(evil-want-Y-yank-to-eol nil)
  '(fci-rule-color "#073642" t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
-    (solarized-color-blend it "#002b36" 0.25)
-    (quote
-     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+	(solarized-color-blend it "#002b36" 0.25)
+	(quote
+	 ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
  '(highlight-symbol-foreground-color "#93a1a1")
  '(highlight-tail-colors
    (quote
-    (("#073642" . 0)
-     ("#546E00" . 20)
-     ("#00736F" . 30)
-     ("#00629D" . 50)
-     ("#7B6000" . 60)
-     ("#8B2C02" . 70)
-     ("#93115C" . 85)
-     ("#073642" . 100))))
+	(("#073642" . 0)
+	 ("#546E00" . 20)
+	 ("#00736F" . 30)
+	 ("#00629D" . 50)
+	 ("#7B6000" . 60)
+	 ("#8B2C02" . 70)
+	 ("#93115C" . 85)
+	 ("#073642" . 100))))
  '(hl-bg-colors
    (quote
-    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
+	("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
  '(hl-fg-colors
    (quote
-    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+	("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(magit-diff-use-overlays nil)
  '(merlin-command "/home/sam/.opam/4.05.0/bin/ocamlmerlin")
  '(merlin-completion-with-doc t t)
  '(nrepl-message-colors
    (quote
-    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
+	("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(ocp-indent-path "/home/sam/.opam/4.05.0/bin/ocp-indent")
  '(package-selected-packages
    (quote
@@ -690,28 +720,28 @@ See `eshell-prompt-regexp'."
  '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map
    (quote
-    ((20 . "#dc322f")
-     (40 . "#c85d17")
-     (60 . "#be730b")
-     (80 . "#b58900")
-     (100 . "#a58e00")
-     (120 . "#9d9100")
-     (140 . "#959300")
-     (160 . "#8d9600")
-     (180 . "#859900")
-     (200 . "#669b32")
-     (220 . "#579d4c")
-     (240 . "#489e65")
-     (260 . "#399f7e")
-     (280 . "#2aa198")
-     (300 . "#2898af")
-     (320 . "#2793ba")
-     (340 . "#268fc6")
-     (360 . "#268bd2"))))
+	((20 . "#dc322f")
+	 (40 . "#c85d17")
+	 (60 . "#be730b")
+	 (80 . "#b58900")
+	 (100 . "#a58e00")
+	 (120 . "#9d9100")
+	 (140 . "#959300")
+	 (160 . "#8d9600")
+	 (180 . "#859900")
+	 (200 . "#669b32")
+	 (220 . "#579d4c")
+	 (240 . "#489e65")
+	 (260 . "#399f7e")
+	 (280 . "#2aa198")
+	 (300 . "#2898af")
+	 (320 . "#2793ba")
+	 (340 . "#268fc6")
+	 (360 . "#268bd2"))))
  '(vc-annotate-very-old-color nil)
  '(weechat-color-list
    (quote
-    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
+	(unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
  '(xterm-color-names
    ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
  '(xterm-color-names-bright
