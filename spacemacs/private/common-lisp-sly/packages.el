@@ -162,13 +162,6 @@
     :after sly
     ))
 
-(defun common-lisp-sly/init-sly-quicklisp ()
-  (use-package sly-quicklisp
-    :ensure t
-    :config
-    (spacemacs/set-leader-keys-for-major-mode 'lisp-mode
-      "rl" 'sly-quickload)))
-
 (defun common-lisp-sly/sly-named-readtables ()
   (use-package sly-named-readtables
     :ensure t))
