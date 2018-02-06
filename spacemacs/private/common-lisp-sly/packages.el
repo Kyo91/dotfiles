@@ -34,9 +34,13 @@
     (common-lisp-snippets :toggle (configuration-layer/package-usedp 'yasnippet))
     ggtags
     sly
+<<<<<<< HEAD
     sly-company
     sly-named-readtables
     ))
+=======
+    sly-company))
+>>>>>>> Minor stuff before pull from laptop
 
 
 (defun common-lisp-sly/post-init-auto-highlight-symbol ()
@@ -158,10 +162,6 @@
   (use-package sly-mrepl
     :after sly
     ))
-
-(defun common-lisp-sly/sly-named-readtables ()
-  (use-package sly-named-readtables
-    :ensure t))
 
 (defun common-lisp-sly/init-sly-company ()
   "Initialize sly-company"

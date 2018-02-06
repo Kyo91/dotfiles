@@ -44,7 +44,10 @@
     magit
     org
     org-projectile
+    ob-restclient
     imenu-anywhere
+    restclient
+    company-restclient
     ;; For gradle syntax highlighting & gradle commands
     groovy-mode
     gradle-mode
@@ -204,4 +207,19 @@ dle-build
 
 (defun kyo/post-init-counsel ()
   (spacemacs/set-leader-keys "ss" 'counsel-grep-or-swiper))
+
+(defun kyo/init-restclient ()
+  (use-package restclient))
+
+(defun kyo/init-company-restclient ()
+  (use-package company-restclient
+    :ensure restclient
+    :config (add-to-list 'company-backends 'company-restclient)))
+
+(defun kyo/init-ob-restclient ()
+  (use-package ob-restclient
+    :ensure org
+    :config (org-babel-do-load-languages
+             'org-babel-load-languages
+             '((restclient . t)))))
 ;;; packages.el ends here
