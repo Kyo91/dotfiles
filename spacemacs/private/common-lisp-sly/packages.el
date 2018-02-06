@@ -34,13 +34,7 @@
     (common-lisp-snippets :toggle (configuration-layer/package-usedp 'yasnippet))
     ggtags
     sly
-<<<<<<< HEAD
-    sly-company
-    sly-named-readtables
-    ))
-=======
     sly-company))
->>>>>>> Minor stuff before pull from laptop
 
 
 (defun common-lisp-sly/post-init-auto-highlight-symbol ()
