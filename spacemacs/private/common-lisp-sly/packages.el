@@ -35,7 +35,6 @@
     ggtags
     sly
     sly-company
-    sly-quicklisp
     sly-named-readtables
     ))
 
@@ -62,9 +61,7 @@
                            sly-indentation
                            sly-autodoc
                            sly-scratch
-                           sly-stickers
-                           sly-quicklisp
-                           sly-named-readtables)
+                           sly-stickers)
             inferior-lisp-program "sbcl")
       (add-hook 'sly-mode-hook #'common-lisp-sly/paredit-over-smart)
       (add-hook 'lisp-mode-hook #'common-lisp-sly/paredit-over-smart)
@@ -161,13 +158,6 @@
   (use-package sly-mrepl
     :after sly
     ))
-
-(defun common-lisp-sly/init-sly-quicklisp ()
-  (use-package sly-quicklisp
-    :ensure t
-    :config
-    (spacemacs/set-leader-keys-for-major-mode 'lisp-mode
-      "rl" 'sly-quickload)))
 
 (defun common-lisp-sly/sly-named-readtables ()
   (use-package sly-named-readtables
