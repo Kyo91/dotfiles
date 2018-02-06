@@ -3,7 +3,7 @@
 *** Emacs                                                             :emacs:
 **** http://planet.emacsen.org/atom.xml
 *** Data Engineering                                           :data:backend:
-**** https://databricks.com/feed                                      :spark:
+**** https://databricks.com/feed                           :spark:databricks:
 ** Language Specific                                                   :lang:
 *** Ocaml                                                             :ocaml:
 **** https://ocaml.org/feed.xml
