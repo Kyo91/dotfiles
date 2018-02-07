@@ -636,6 +636,11 @@ See `eshell-prompt-regexp'."
 
   (add-to-list 'company-backends 'company-restclient)
 
+  ;; Hide people joining, leaving IRC
+  (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+  (setq erc-lurker-threshold-time 3600)
+
+
   ;; Stop spacemacs from overriding these
   (spacemacs/set-leader-keys (kbd "hdf") #'helpful-function)
   (spacemacs/set-leader-keys (kbd "hdv") #'helpful-variable)
