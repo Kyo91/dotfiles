@@ -23,3 +23,5 @@
 **** http://feeds.nytimes.com/nyt/rss/Technology
 *** Finance                                                         :finance:
 **** http://rss.nytimes.com/services/xml/rss/nyt/YourMoney.xml
+** Personal Finance                                        :personal:finance:
+*** http://www.getrichslowly.org/feed/
