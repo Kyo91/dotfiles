@@ -1,27 +1,33 @@
 * Feeds                                                              :elfeed:
 ** Software Development                                                 :dev:
 *** Emacs                                                             :emacs:
-**** http://planet.emacsen.org/atom.xml
+**** [[http://planet.emacsen.org/atom.xml][Planet Emacs]]
+**** entry-title: \(emacs|org-mode\)
 *** Data Engineering                                           :data:backend:
-**** https://databricks.com/feed                           :spark:databricks:
-** Language Specific                                                   :lang:
-*** Ocaml                                                             :ocaml:
-**** https://ocaml.org/feed.xml
-*** Lisp                                                               :lisp:
-**** http://planet.lisp.org/rss20.xml
-**** http://www.lispcast.com/
+**** [[https://databricks.com/feed][Databricks]]                           :spark:databricks:
+*** Language Specific                                                  :lang:
+**** Ocaml                                                            :ocaml:
+***** [[https://ocaml.org/feed.xml][Official Ocaml]]
+***** [[https://blog.janestreet.com/feed.xml][Jane Street Blog]]
+***** entry-title: \(ocaml|sml\)
+**** Lisp                                                              :lisp:
+***** [[http://planet.lisp.org/rss20.xml][Planet Lisp]]
+***** [[http://www.lispcast.com/][Lispcast]]
+***** entry-title: lisp
 **** Clojure                                                        :clojure:
-*** Scala                                                             :scala:
+***** entry-title: clojure
+**** Scala                                                            :scala:
+*** https://adambard.com/blog/feed.xml
 ** Other                                                               :misc:
 *** Comics                                                            :comic:
-**** https://xkcd.com/atom.xml                                         :xkcd:
-**** https://www.smbc-comics.com/rss.php                               :smbc:
+**** [[https://xkcd.com/atom.xml][xkcd]]                                         :xkcd:
+**** [[https://www.smbc-comics.com/rss.php][SMBC]]                               :smbc:
 ** NYTimes                                                     :nytimes:news:
 *** Politics                                                       :politics:
-**** http://www.nytimes.com/services/xml/rss/nyt/Politics.xml
+**** [[http://www.nytimes.com/services/xml/rss/nyt/Politics.xml][NYT - Politics]]
 *** Tech                                                         :technology:
-**** http://feeds.nytimes.com/nyt/rss/Technology
+**** [[http://feeds.nytimes.com/nyt/rss/Technology][NYT - Technology]]
 *** Finance                                                         :finance:
-**** http://rss.nytimes.com/services/xml/rss/nyt/YourMoney.xml
+**** [[http://rss.nytimes.com/services/xml/rss/nyt/YourMoney.xml][NYT - Finance]]
 ** Personal Finance                                        :personal:finance:
-*** http://www.getrichslowly.org/feed/
+*** [[http://www.getrichslowly.org/feed/][GRS]]
