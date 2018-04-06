@@ -591,11 +591,11 @@ you should place your code here."
         '((t . ivy--regex-fuzzy))
         ivy-height 20)
   (add-hook 'java-mode-hook
-            (setq indent-tabs-mode t
-                  tab-width 4))
+            (lambda () (setq indent-tabs-mode t
+                        tab-width 4)))
   (add-hook 'groovy-mode-hook
-			(setq indent-tabs-mode t
-				  tab-width 4))
+            (lambda () (setq indent-tabs-mode t
+                        tab-width 4)))
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
   (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
   (spacemacs/set-leader-keys-for-major-mode 'dired-mode
@@ -654,11 +654,6 @@ See `eshell-prompt-regexp'."
   (setq org-confirm-babel-evaluate nil)
   (add-to-list 'company-backends 'company-restclient)
   (setq auto-window-vscroll nil)
-
-  ;; Hide people joining, leaving IRC
-  (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-  (setq erc-lurker-threshold-time 3600)
-
 
   ;; Stop spacemacs from overriding these
   (spacemacs/set-leader-keys (kbd "hdf") #'helpful-function)

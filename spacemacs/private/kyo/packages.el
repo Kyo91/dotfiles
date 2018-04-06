@@ -153,7 +153,7 @@ ctive)
 
 (defun kyo/gradle-test ()
   (interactive)
-  (kyo/run-gradle-command-async "test"))
+  (kyo/run-gradle-command-async "clean test jacocoTestReport"))
 
 
 (defun kyo/dired-open (arg file-list)
@@ -172,8 +172,7 @@ ctive)
     :mode ("\\.java" . gradle-mode)
     :config (add-hook 'magit-status-mode-hook '(lambda () (gradle-mode 1)))
     :config (spacemacs/set-leader-keys-for-minor-mode 'gradle-mode
-              "ob" 'kyo/gra    // TODO write this method for processing long timestamps into DateTime fields w/ helper method for converting one column at a time.
-dle-build
+              "ob" 'kyo/gradle-build
               "ot" 'kyo/gradle-test
               "oa" 'kyo/gradle-apply-spotless
               "oc" 'kyo/gradle-check
