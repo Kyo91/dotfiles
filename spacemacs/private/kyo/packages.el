@@ -44,10 +44,7 @@
     magit
     org
     org-projectile
-    ob-restclient
     imenu-anywhere
-    restclient
-    company-restclient
     ;; For gradle syntax highlighting & gradle commands
     groovy-mode
     gradle-mode
@@ -112,15 +109,28 @@ Each entry is either:
 
 
 (defun kyo/post-init-org ()
-  (setq org-agenda-files '("~/agenda" "~/.deft"))
-  (setq org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE" "CANCELED"))
-        org-default-notes-file "/Users/sblumenthal/agenda/capture.org"
+  (setq org-agenda-files '("~/agenda"))
+  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)"))
+        org-default-notes-file "~/agenda/inbox.org"
         org-enforce-todo-dependencies 't
         org-enforce-todo-checkbox-dependencies 't)
   (setq org-capture-templates           ; Template for storing capture templates by date.
-        '(("t" "General TODO" entry (file+datetree "~/agenda/capture.org")
-           "* TODO %^{Description}\n %i\n"))
-        )
+        '(("t" "Todo [inbox]" entry (file+headline "~/agenda/inbox.org" "Tasks")
+           "* TODO %?\n  %i\n  %u\n  %a")
+          ("T" "Tickler" entry
+           (file+headline "tickler.org" "Tickler")
+           "* %i%? \n %U")
+          ("i" "Ideas" entry (file+headline "~/agenda/inbox.org" "Ideas")
+           "* %? \n %U")
+          ("n" "Note/Data" entry (file+headline "~/agenda/inbox.org" "Notes/Data")
+           "* %?  \n %i\n  %u\n  %a")
+          ("j" "Journal" entry (file+datetree "~/agenda/journal.org")
+           "* %?\nEntered on %U\n %i\n %a")))
+  (setq org-refile-targets '(("~/agenda/gtd.org" :maxlevel . 3)
+                             ("~/agenda/someday.org" :level . 1)
+                             ("~/agenda/tickler.org" :maxlevel . 2)
+                             ("~/agenda/ideas.org" :maxlevel . 3)
+                             ))
   ;; (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
   ;; (advice-add 'evil-quit :before 'org-save-all-org-buffers)
   )
@@ -207,18 +217,4 @@ ctive)
 (defun kyo/post-init-counsel ()
   (spacemacs/set-leader-keys "ss" 'counsel-grep-or-swiper))
 
-(defun kyo/init-restclient ()
-  (use-package restclient))
-
-(defun kyo/init-company-restclient ()
-  (use-package company-restclient
-    :ensure restclient
-    :config (add-to-list 'company-backends 'company-restclient)))
-
-(defun kyo/init-ob-restclient ()
-  (use-package ob-restclient
-    :ensure org
-    :config (org-babel-do-load-languages
-             'org-babel-load-languages
-             '((restclient . t)))))
 ;;; packages.el ends here
